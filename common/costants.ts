@@ -5,8 +5,10 @@ export const TEST_OFFLINE_NAVBAR = [
     link: [
       { name: "Manifesto", href: "/AboutUs" },
       { name: "Ordina ora", href: "/ordina" },
-      { name: "Registrati", href: "/registrati" },
-      { name: "Login", href: "/login" },
+      // { name: "Registrati", href: "/registrati" },
+      // { name: "Login", href: "/login" },
     ],
   },
 ];
+
+export const PROFILE_PHOTO = "/img/userPhoto.png";

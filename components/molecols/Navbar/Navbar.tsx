@@ -1,6 +1,8 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { TEST_OFFLINE_NAVBAR } from "../../../common/costants";
 import Burger from "../burgerMenu/Burger";
+import Login from "../Login/Login";
 
 function Navbar() {
   //   const router = useRouter();
@@ -38,31 +40,67 @@ function Navbar() {
   }, [width]);
 
   return (
-    <div
-      className={`${
-        isScrolled
-          ? "bg-[#ffffff09] w-full shadow-md flex flex-row content-around"
-          : "bg-neutral-50 w-full shadow-md flex flex-row content-around"
-      }`}
-    >
-      <div className="text-[1.375rem] font-bold p-[16px]">
-        {TEST_OFFLINE_NAVBAR[0].logo}
-      </div>
+    <div>
       {width > breakPoint ? (
-        TEST_OFFLINE_NAVBAR[0].link.map((nm, i) => {
-          return (
-            <div key={i} className="content-center">
-              <a className="text-black px-5 py-2 font-bold  hover:text-[#CDFCF6]">
-                {nm.name}
-              </a>
+        <div
+          className={`${
+            isScrolled
+              ? "bg-[#ffffff09] w-full shadow-md flex flex-row content-center justify-center items-center"
+              : "bg-neutral-50 w-full shadow-md flex flex-row content-center justify-center items-center"
+          }`}
+        >
+          <div className="text-[1.375rem] font-bold p-[16px]">
+            <Link href={"/"}>
+              <button>{TEST_OFFLINE_NAVBAR[0].logo}</button>
+            </Link>
+          </div>
+          <div className="flex flex-row content-center">
+            {TEST_OFFLINE_NAVBAR[0].link.map((nm, i) => {
+              return (
+                <div key={i} className="content-center">
+                  <a className="text-black px-5 py-2 font-bold  hover:text-[#CDFCF6]">
+                    {nm.name}
+                  </a>
+                </div>
+              );
+            })}
+            <div>
+              <Login />
             </div>
-          );
-        })
+          </div>
+        </div>
       ) : (
-        <Burger />
+        <div>
+          <Burger />
+        </div>
       )}
     </div>
   );
 }
 
 export default Navbar;
+
+{
+  /* <div className="flex flex-row content-center">
+        {width > breakPoint ? (
+          TEST_OFFLINE_NAVBAR[0].link.map((nm, i) => {
+            return (
+              <div key={i} className="content-center">
+                <a className="text-black px-5 py-2 font-bold  hover:text-[#CDFCF6]">
+                  {nm.name}
+                </a>
+              </div>
+            );
+          })
+        ) : (
+          <>
+            <div>
+              <Burger />
+            </div>
+          </>
+        )}
+        <div>
+          <Login />
+        </div>
+      </div>  */
+}
