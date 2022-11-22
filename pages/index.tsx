@@ -7,7 +7,6 @@ import Loader from "../components/atoms/loader/Loader";
 export default function Home() {
   return (
     <div>
-      <Navbar />
       <Loader show={true} />
     </div>
   );

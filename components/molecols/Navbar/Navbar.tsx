@@ -39,26 +39,28 @@ function Navbar() {
     return window.removeEventListener("resize", changeWidth);
   }, [width]);
 
+  //TODO
+  //feature -> width > breakPoint -> correggere bug
   return (
     <div>
-      {width > breakPoint ? (
-        <div
-          className={`${
-            isScrolled
-              ? "bg-[#ffffff09] w-full shadow-md flex flex-row content-center justify-center items-center"
-              : "bg-neutral-50 w-full shadow-md flex flex-row content-center justify-center items-center"
-          }`}
-        >
-          <div className="text-[1.375rem] font-bold p-[16px]">
+      <div
+        className={`${
+          isScrolled
+            ? "bg-[#ffffff09] w-full shadow-md flex flex-row content-center justify-center items-center"
+            : "bg-neutral-50 w-full shadow-md flex flex-row content-center justify-center items-center"
+        }`}
+      >
+        <div className="w-full flex flex-row content-between items-center justify-between">
+          <div className="text-[1.375rem] font-bold p-[16px] ">
             <Link href={"/"}>
               <button>{TEST_OFFLINE_NAVBAR[0].logo}</button>
             </Link>
           </div>
-          <div className="flex flex-row content-center">
+          <div className=" hidden lg:flex lg:flex-row content-center">
             {TEST_OFFLINE_NAVBAR[0].link.map((nm, i) => {
               return (
                 <div key={i} className="content-center">
-                  <a className="text-black px-5 py-2 font-bold  hover:text-[#CDFCF6]">
+                  <a className="text-black px-5 py-2 font-bold hover:text-[#CDFCF6]">
                     {nm.name}
                   </a>
                 </div>
@@ -68,39 +70,13 @@ function Navbar() {
               <Login />
             </div>
           </div>
+          <div className="lg:hidden">
+            <Burger onClick={() => {}} href="" disabled />
+          </div>
         </div>
-      ) : (
-        <div>
-          <Burger />
-        </div>
-      )}
+      </div>
     </div>
   );
 }
 
 export default Navbar;
-
-{
-  /* <div className="flex flex-row content-center">
-        {width > breakPoint ? (
-          TEST_OFFLINE_NAVBAR[0].link.map((nm, i) => {
-            return (
-              <div key={i} className="content-center">
-                <a className="text-black px-5 py-2 font-bold  hover:text-[#CDFCF6]">
-                  {nm.name}
-                </a>
-              </div>
-            );
-          })
-        ) : (
-          <>
-            <div>
-              <Burger />
-            </div>
-          </>
-        )}
-        <div>
-          <Login />
-        </div>
-      </div>  */
-}

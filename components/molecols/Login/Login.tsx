@@ -1,5 +1,7 @@
 import Link from "next/link";
 import PROFILE_PHOTO from "../../../common/costants";
+import Image from "next/image";
+import Admin from "../../../pages/[admin]/Admin";
 
 type userType = {
   user: string;
@@ -15,6 +17,9 @@ const Login: React.FC = () => {
     producer: false,
   };
 
+  const user = null;
+  const username = null;
+
   return (
     <div className=" w-full flex flex-row content-center">
       <div>
@@ -22,7 +27,10 @@ const Login: React.FC = () => {
           <button>Vicino</button>
         </Link>
       </div>
+      {/* TODO
+metere boolean che riconosce accedi o no
 
+*/}
       <div>
         {userData.userName ? (
           <>
@@ -33,12 +41,20 @@ const Login: React.FC = () => {
                     Carica prodotto
                   </button>
                 </Link>
-                <Link href={"/usernamete"}>
-                  <Image className=" ml-[10px] mr-[10px]" src={PROFILE_PHOTO} />
+                <Link href={`/${username}`}>
+                  <div className="relative aspect-1 h-[20px] w-full cursor-pointer rounded-[10px] bg-slate-100 md:h-[543px] xl:h-[590px]">
+                    <Image
+                      className=" ml-[10px] mr-[10px]"
+                      src={"/img/userPhoto.png"}
+                      alt="no-image"
+                      objectFit="cover"
+                      layout="fill"
+                    />
+                  </div>
                 </Link>
               </>
             ) : (
-              <Link href={"/admin"}>
+              <Link href={`/${Admin}`}>
                 <button className=" ml-[10px] mr-[10px]">
                   I tuoi pre-ordini
                 </button>
