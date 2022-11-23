@@ -39,8 +39,6 @@ function Navbar() {
     return window.removeEventListener("resize", changeWidth);
   }, [width]);
 
-  //TODO
-  //feature -> width > breakPoint -> correggere bug
   return (
     <div>
       <div
@@ -60,9 +58,12 @@ function Navbar() {
             {TEST_OFFLINE_NAVBAR[0].link.map((nm, i) => {
               return (
                 <div key={i} className="content-center">
-                  <a className="text-black px-5 py-2 font-bold hover:text-[#CDFCF6]">
+                  <Link
+                    href={nm.href}
+                    className="text-black px-5 py-2 font-bold hover:text-[#CDFCF6]"
+                  >
                     {nm.name}
-                  </a>
+                  </Link>
                 </div>
               );
             })}

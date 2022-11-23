@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TEST_OFFLINE_NAVBAR } from "../../../common/costants";
+import Login from "../Login/Login";
 
 interface burgerMenu {
   onClick: () => void;
@@ -36,21 +37,21 @@ const Burger: React.FC<burgerMenu> = ({
             Chiudi
           </button>
         )}
-
-        {popup && (
-          <div className="flex flex-col">
-            {TEST_OFFLINE_NAVBAR[0].link.map((nm, i) => {
-              return (
-                <div key={i} className="content-center">
-                  <a className="text-black px-5 py-2 font-bold hover:text-[#CDFCF6]">
-                    {nm.name}
-                  </a>
-                </div>
-              );
-            })}
-          </div>
-        )}
       </div>
+      {popup && (
+        <div className="flex flex-col ">
+          {TEST_OFFLINE_NAVBAR[0].link.map((nm, i) => {
+            return (
+              <div key={i} className="content-center">
+                <a className="text-black px-5 py-2 font-bold hover:text-[#CDFCF6]">
+                  {nm.name}
+                </a>
+              </div>
+            );
+          })}
+          <Login />
+        </div>
+      )}
     </div>
   );
 };

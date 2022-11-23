@@ -3,8 +3,8 @@ export const TEST_OFFLINE_NAVBAR = [
   {
     logo: "Baki 🥖",
     link: [
-      { name: "Manifesto", href: "/AboutUs" },
-      { name: "Ordina ora", href: "/ordina" },
+      { name: "Manifesto", href: "/aboutus" },
+      { name: "Ordina ora", href: "/marketplace" },
       // { name: "Registrati", href: "/registrati" },
       // { name: "Login", href: "/login" },
     ],
