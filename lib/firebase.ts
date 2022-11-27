@@ -1,9 +1,5 @@
 import firebase from "firebase/app";
-import "firebase/database";
 import { initializeApp } from "firebase/app";
-import { getStorage } from "@firebase/storage";
-import { getDatabase } from "firebase/database";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAzoVmfLmvoKCvuZbQaV-72kGG3-0ARyGo",
@@ -16,13 +12,4 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-export const provider = new GoogleAuthProvider();
-export const auth = getAuth(app);
-auth.languageCode = "it";
-export const db = getDatabase(app);
-export const storage = getStorage(app);
-
-export default firebaseConfig;
-export { app };
+export const app = initializeApp(firebaseConfig);

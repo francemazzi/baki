@@ -2,7 +2,8 @@ import Link from "next/link";
 import PROFILE_PHOTO from "../../../common/costants";
 import Image from "next/image";
 import Admin from "../../../pages/[admin]/Admin";
-import Username from "../../../pages/[username]/Username";
+// import Username from "../../../pages/[setUsername]/SetUsername";
+//ricereare pagina username che ho eliminato-> serve a settare username
 
 type userType = {
   user: string;

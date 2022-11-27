@@ -3,8 +3,18 @@ import React, { useEffect, useState } from "react";
 import { TEST_OFFLINE_NAVBAR } from "../../../common/costants";
 import Burger from "../burgerMenu/Burger";
 import Login from "../Login/Login";
+import { UserContext } from "../../../lib/context";
+import { useContext } from "react";
+
+type userType = {
+  user: string;
+  userName: string;
+  producer: boolean;
+};
 
 function Navbar() {
+  //UserContext
+  const { user, userName, producer } = useContext(UserContext);
   //   const router = useRouter();
   const [currentRoute, setCurrentRoute] = useState<string>();
   const [isScrolled, setIsScrolled] = useState<boolean>();
@@ -21,6 +31,7 @@ function Navbar() {
 
   //scroll menu trasnparent
   //scroll menu trasnparent
+
   useEffect(() => {
     const handleScroll = () => {
       window.scrollY > 0 ? setIsScrolled(true) : setIsScrolled(false);
