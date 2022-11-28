@@ -37,7 +37,7 @@ export default function Enter() {
 function SignInButton() {
   function signInWithGoogle() {
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         if (credential) {
@@ -45,24 +45,19 @@ function SignInButton() {
         }
         // The signed-in user info.
         const user = result.user;
-
-        //salvare dati db
-        setDoc(doc(db, "user"), {
+        console.log(user);
+        //salvare dati setDoc con id specifico
+        await setDoc(doc(db, "user", user.uid), {
           email: user.email,
           name: user.displayName,
           photo: user.photoURL,
           uid: user.uid,
           provider: user.providerData,
         });
+        //addDoc
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        // const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(error);
       });
   }
 
