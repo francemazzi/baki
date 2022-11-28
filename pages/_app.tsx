@@ -48,7 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
   // }, [user]);
 
   return (
-    <>
+    <div className="font-montserrat">
       <UserContext.Provider
         value={{ user: "", userName: "a", producer: false }}
       >
@@ -56,6 +56,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
         <Toaster />
       </UserContext.Provider>
-    </>
+    </div>
   );
 }

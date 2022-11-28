@@ -4,11 +4,12 @@ import styles from "../styles/Home.module.css";
 import Navbar from "../components/molecols/Navbar/Navbar";
 import Loader from "../components/atoms/loader/Loader";
 import CategoryBar from "../components/organism/CategoryBar";
+import ProductCard from "../components/organism/ProductCard";
 
 export default function Home() {
   return (
     <div>
-      <CategoryBar />
+      <ProductCard />
       {/* <Loader show={true} /> */}
     </div>
   );
