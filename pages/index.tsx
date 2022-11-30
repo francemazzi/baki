@@ -9,7 +9,9 @@ import ProductList from "../components/organism/ProductList";
 export default function Home() {
   return (
     <div>
-      <ProductList />
+      <div>
+        Il migliore modo per ridurre i costi della spesa, pre-ordinando ❤️
+      </div>
       {/* <Loader show={true} /> */}
     </div>
   );

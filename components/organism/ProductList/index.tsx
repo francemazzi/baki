@@ -4,7 +4,7 @@ import { PRODOTTI } from "../../../common/costants";
 
 const ProductList = () => {
   return (
-    <>
+    <div className="flex flex-row items-center justify-center flex-wrap">
       {PRODOTTI.map((i, id) => {
         return (
           <div key={id}>
@@ -19,7 +19,7 @@ const ProductList = () => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 

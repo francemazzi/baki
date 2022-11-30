@@ -4,6 +4,7 @@ import { TEST_OFFLINE_NAVBAR } from "../../../common/costants";
 import Burger from "../burgerMenu/Burger";
 import Login from "../Login/Login";
 import { UserContext } from "../../../lib/context";
+import BusketIcon from "../../atoms/BusketIcon";
 import { useContext } from "react";
 
 type userType = {
@@ -85,6 +86,9 @@ function Navbar() {
           <div className="lg:hidden">
             <Burger onClick={() => {}} href="" disabled />
           </div>
+        </div>
+        <div className="pr-[1rem]">
+          <BusketIcon />
         </div>
       </div>
     </div>
