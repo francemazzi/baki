@@ -61,6 +61,9 @@ const createProduct = () => {
       console.log("errore caricament");
     }
   };
+
+  //remove image file
+  const handleRemoveFile = () => setImgLoad(undefined);
   return (
     <div className="flex flex-col items-center justify-center">
       {/* title */}
@@ -97,22 +100,35 @@ const createProduct = () => {
                 >
                   Carica
                 </button>
-                {progressUpload && <Progress percent={progressUpload} />}
+                {progressUpload > 0 ? (
+                  <Progress percent={progressUpload} />
+                ) : (
+                  <div></div>
+                )}
               </div>
             )}
-            {downloadURL && (
-              <div className="p-[6rem] shadow-md rounded-md">
-                <div className="w-[5rem] h-[5rem] relative">
-                  <Image
-                    src={downloadURL}
-                    alt={downloadURL}
-                    objectFit="cover"
-                    layout="fill"
-                    className="rounded-t-md"
-                  />
+
+            {/* SHOW UPLOAD CARD */}
+            <div className="px-[10px] relative">
+              {downloadURL && (
+                <div>
+                  <div className=" absolute top-0 right-0">
+                    <button onClick={handleRemoveFile}>❌</button>
+                  </div>
+                  <div className="p-[6rem] shadow-md rounded-md">
+                    <div className="w-[5rem] h-[5rem] relative">
+                      <Image
+                        src={downloadURL}
+                        alt={downloadURL}
+                        objectFit="cover"
+                        layout="fill"
+                        className="rounded-t-md"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
