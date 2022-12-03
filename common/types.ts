@@ -6,4 +6,5 @@ export interface NewProductType {
   id?: string;
   producer?: string;
   title?: string;
+  img?: string;
 }
