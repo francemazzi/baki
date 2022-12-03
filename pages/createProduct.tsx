@@ -66,6 +66,21 @@ const createProduct = () => {
   const handleRemoveFile = () => setImgLoad(undefined);
   return (
     <div className="flex flex-col items-center justify-center">
+      {/* TODO  */}
+      {/*
+      
+      AGGIUNGERE Input:
+      title
+      Abbinamenti
+      Description
+      Ingredient
+      disponibile
+    
+      Logica:
+      - Assegnare a prodotto caricato: producer, id, img
+      - Inserire metatada per collegare image a produttore e prodotto
+       */}
+
       {/* title */}
       {/* <div className="">
         <h3>Carica il nome</h3>
