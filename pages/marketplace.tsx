@@ -6,10 +6,10 @@ function marketplace() {
   return (
     <div>
       <div>
-        {/* <ProductList /> */}
+        <ProductList scrollMode="flex-wrap" />
         {/*  */}
         {/* test scheda prodotto*/}
-        <TestCard />
+        {/* <TestCard /> */}
       </div>
     </div>
   );

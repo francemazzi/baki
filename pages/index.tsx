@@ -8,9 +8,26 @@ import ProductList from "../components/organism/ProductList";
 
 export default function Home() {
   return (
-    <div>
-      <div>
-        Il migliore modo per ridurre i costi della spesa, pre-ordinando ❤️
+    <div className="m-[10px]">
+      <div className="flex flex-col justify-center items-center p-[20px] h-[20rem] rounded-lg shadow-xl relative">
+        <Image
+          src={"/img/goldBread.jpg"}
+          alt="photo not upload"
+          objectFit="cover"
+          layout="fill"
+          className="rounded-lg"
+        />
+        <div className="text-[22px] font-bold text-[white] bg-[#a59f9f4b] p-[10px] drop-shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] rounded-lg relative">
+          Il migliore modo per ridurre i costi della spesa, pre-ordinando ❤️
+        </div>
+      </div>
+      <div className="my-[15px]">
+        <div className="text-[19px] font-semibold ">
+          Scopri i nuovi prodotti
+        </div>
+        <div className="bg-[white]">
+          <ProductList scrollMode="overflow-x-scroll" />
+        </div>
       </div>
       {/* <Loader show={true} /> */}
     </div>

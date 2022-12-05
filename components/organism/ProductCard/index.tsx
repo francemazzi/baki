@@ -20,10 +20,10 @@ const ProductCard: React.FC<cardType> = ({
   portate,
 }) => {
   return (
-    <div className="flex flex-col justify-center sm:w-[8rem] md:w-[15rem] lg:w-[20rem] h-[20rem] shadow-md rounded-md m-[15px]">
+    <div className="flex flex-col justify-center h-[20rem] w-[9rem] shadow-md rounded-md m-[5px]">
       {/* foto prodotto + add cart */}
       <div
-        className={`flex flex-col justify-end h-full rounded-t-md relative cursor-pointer] `}
+        className={`flex flex-col justify-end h-[20rem] w-[9rem] rounded-t-md relative cursor-pointer`}
       >
         <Image
           src={foto}
@@ -32,6 +32,7 @@ const ProductCard: React.FC<cardType> = ({
           layout="fill"
           className="rounded-t-md"
         />
+
         <div className="flex flex-row items-center justify-around pb-[5px] relative">
           <div className="text-[#FFF] text-[15px] shadow-md font-bold">
             {portate} prozion{+portate > 1 ? "i" : "e"}

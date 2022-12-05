@@ -9,35 +9,70 @@ import {
 import { storage } from "../lib/controller";
 import Image from "next/image";
 import v4 from "uuid";
-import { url } from "inspector";
+import { NewProductType } from "../common/types";
+
+{
+  /*
+    TODO
+
+      Logica:
+      - Assegnare a prodotto caricato: producer, id, img
+      - Inserire metatada per collegare image a produttore e prodotto
+       
+*/
+}
 
 const createProduct = () => {
-  const [imgLoad, setImgLoad] = useState<File>();
+  // const [imgLoad, setImgLoad] = useState<File>();
+  const [inputs, setInputs] = useState<NewProductType>({});
   const [downloadURL, setDownloadURL] = useState("");
   const [isUpLoading, setIsUpLoading] = useState(false);
   const [progressUpload, setProgressUpload] = useState(0);
 
-  const handleUploadImage = (files: any) => {
-    if (files && files[0].size < 1000000000000) {
-      setImgLoad(files[0]);
+  const handleUpload = (e: any) => {
+    const name = e.currentTarget.name;
+    const value = e.currentTarget.value;
+    const files = e.currentTarget.files;
+
+    // IL PROBLEMA è che stai impostando n file non una sola immagine quindi non riesci a salvare tutto
+    //Per img la salverà ma non per gli altri dati -> possibile soluzione, specificarlo dentro img
+
+    //OPPURE metti la lettura dell'evento direttamente sul'inpt e non su handleUpload (coem avevi fatto su github)
+
+    //if (value && value[0].size < 1000000000000)
+
+    if (value) {
+      setInputs((values) => ({ ...values, [name]: value }));
+    } else if (files) {
+      setInputs((values) => ({ ...values, [name]: files[0] }));
+      console.log(files[0]);
+      // setImgLoad(files[0]);
     } else {
       alert("File troppo grande!");
     }
   };
 
+  // INPUT FORM string (da unire poi con image)
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    console.log(inputs);
+  };
+
   const handleClickUpload = () => {
-    if (imgLoad) {
-      const name = imgLoad.name;
-      const storageRef = ref(storage, `images/${name}`);
-      const uploadTask = uploadBytesResumable(storageRef, imgLoad);
-      //Operazione storage
+    if (inputs.img) {
+      const name = inputs.img.name;
+      console.log(inputs.img);
+      console.log(inputs);
+      const storageRef = ref(storage, `images/products/${name}`);
+      const uploadTask = uploadBytesResumable(storageRef, inputs.img);
+
+      //Operazione storage immagine
       uploadTask.on(
         "state_changed",
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setProgressUpload(progress); //mostrare caricamento
-          console.log("Upload is " + progress + "% done");
           switch (snapshot.state) {
             case "paused":
               console.log("Upload is paused");
@@ -63,51 +98,102 @@ const createProduct = () => {
   };
 
   //remove image file
-  const handleRemoveFile = () => setImgLoad(undefined);
+  const handleRemoveFile = () => setInputs({});
   return (
     <div className="flex flex-col items-center justify-center">
-      {/* TODO  */}
-      {/*
-      
-      AGGIUNGERE Input:
-      title
-      Abbinamenti
-      Description
-      Ingredient
-      disponibile
-    
-      Logica:
-      - Assegnare a prodotto caricato: producer, id, img
-      - Inserire metatada per collegare image a produttore e prodotto
-       */}
-
-      {/* title */}
-      {/* <div className="">
-        <h3>Carica il nome</h3>
-        <div>
-          <input type="file" />
-        </div>
-      </div> */}
-
-      {/* Image */}
       <div className="flex flex-col justify-center">
         <h3 className="text-[20px] my-[10px] text-center">
           Carica i tuoi prodotti
         </h3>
-        <div className="flex flex-col">
-          <input
-            type="file"
-            onChange={(e) => {
-              handleUploadImage(e.target.files);
-            }}
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          {/* title */}
+          <div className="">
+            <h3>Carica il nome</h3>
+            <div>
+              <input
+                className="shadow-sm border-r-zinc-500"
+                onChange={handleUpload}
+                name="title"
+                type="text"
+                value={inputs.title || ""}
+              />
+            </div>
+          </div>
+          {/* Description */}
+          <div className="">
+            <h3>Aggiungi una descrizione</h3>
+            <div>
+              <input
+                className="shadow-sm border-r-zinc-500"
+                onChange={handleUpload}
+                name="Description"
+                type="text"
+                value={inputs.Description || ""}
+              />
+            </div>
+          </div>
+          {/* Ingredient */}
+          <div className="">
+            <h3>Aggiungi gli ingredienti</h3>
+            <div>
+              <input
+                className="shadow-sm border-r-zinc-500"
+                onChange={handleUpload}
+                name="Ingredient"
+                type="text"
+                value={inputs.Ingredient || ""}
+              />
+            </div>
+          </div>
+          {/* Abbinamenti */}
+          <div className="">
+            <h3>Carica un Abbinamento con il prodotto</h3>
+            <div>
+              <input
+                className="shadow-sm border-r-zinc-500"
+                onChange={handleUpload}
+                name="Abbinamenti"
+                type="text"
+                value={inputs.Abbinamenti || ""}
+              />
+            </div>
+          </div>
+          {/* disponibile */}
+          <div className="">
+            <h3>Carica una quantità disponibile</h3>
+            <div>
+              <input
+                className="shadow-sm border-r-zinc-500"
+                onChange={handleUpload}
+                name="disponibile"
+                type="text"
+                value={inputs.disponibile || ""}
+              />
+            </div>
+          </div>
+
+          {/* img */}
+          <h3>Carica la foto</h3>
+          <div className="flex flex-col">
+            <input
+              type="file"
+              name="img"
+              value={inputs.img || ""}
+              // onChange={(e) => {
+              //   handleUpload(e.target.files);
+              // }}
+              onChange={handleUpload}
+            />
+          </div>
+        </form>
         <div className="fle flex-col justify-center items-center shadow-md my-[10px]">
           <div>
-            {imgLoad && (
+            {inputs.img && (
               <div className="flex flex-col p-[20px] shadow-md">
-                <div className="my-[5px]">{"Nome: " + imgLoad.name}</div>
-                <div className="my-[5px]">{"Dimensione: " + imgLoad.size}</div>
+                <div className="my-[5px]">{"Nome: " + inputs.img?.name}</div>
+                <div className="my-[5px]">
+                  {"Dimensione: " + inputs.img?.size}
+                </div>
                 {/* set -> isuploading */}
                 <button
                   className="p-[10px] shadow-lg rounded-md"
@@ -131,10 +217,10 @@ const createProduct = () => {
                     <button onClick={handleRemoveFile}>❌</button>
                   </div>
                   <div className="p-[6rem] shadow-md rounded-md">
-                    <div className="w-[5rem] h-[5rem] relative">
+                    <div className="h-[5rem] w-[10rem] relative">
                       <Image
                         src={downloadURL}
-                        alt={downloadURL}
+                        alt={"downloadURL"}
                         objectFit="cover"
                         layout="fill"
                         className="rounded-t-md"

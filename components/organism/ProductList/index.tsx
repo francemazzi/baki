@@ -2,9 +2,13 @@ import React from "react";
 import ProductCard from "../ProductCard";
 import { PRODOTTI } from "../../../common/costants";
 
-const ProductList = () => {
+type TProductList = {
+  scrollMode?: string;
+};
+
+const ProductList: React.FC<TProductList> = ({ scrollMode }) => {
   return (
-    <div className="flex flex-row items-center justify-center flex-wrap">
+    <div className={`flex flex-row items-center  ${scrollMode}`}>
       {PRODOTTI.map((i, id) => {
         return (
           <div key={id}>
