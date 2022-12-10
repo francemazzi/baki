@@ -8,14 +8,15 @@ import "firebase/firestore";
 
 const firestore = getFirestore(app);
 
+//database - firestore
+const db = getFirestore(app);
+
 //Products collection
-const produtsCollection = collection(firestore, "products");
+// const produtsCollection = collection(firestore, "products");
+const produtsCollection = collection(db, "products");
 
 //User data collection
 const usersCollection = collection(firestore, "user");
-
-//database - firestore
-const db = getFirestore(app);
 
 //firebase - storage
 const storage = getStorage(app, "gs://baki-cfc18.appspot.com");

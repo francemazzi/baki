@@ -8,7 +8,7 @@ type TProductList = {
 
 const ProductList: React.FC<TProductList> = ({ scrollMode }) => {
   return (
-    <div className={`flex flex-row items-center  ${scrollMode}`}>
+    <div className={`flex flex-row items-center justify-center ${scrollMode}`}>
       {PRODOTTI.map((i, id) => {
         return (
           <div key={id}>

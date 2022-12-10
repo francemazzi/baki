@@ -2,14 +2,24 @@ import React, { use, useEffect, useState } from "react";
 import { Progress, Space } from "antd";
 import {
   getDownloadURL,
+  getStorage,
   ref,
   uploadBytes,
   uploadBytesResumable,
 } from "firebase/storage";
-import { storage } from "../lib/controller";
+import { storage, produtsCollection, db } from "../lib/controller";
 import Image from "next/image";
-import v4 from "uuid";
+import { v4 as uuid } from "uuid";
 import { NewProductType } from "../common/types";
+import {
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+  getFirestore,
+} from "firebase/firestore";
+import { async } from "@firebase/util";
+import { app } from "../lib/firebase";
 
 {
   /*
@@ -23,6 +33,7 @@ import { NewProductType } from "../common/types";
 }
 
 const createProduct = () => {
+  //libreria per gestire form -> userform
   // const [imgLoad, setImgLoad] = useState<File>();
   const [inputs, setInputs] = useState<NewProductType>({});
   const [downloadURL, setDownloadURL] = useState("");
@@ -34,18 +45,10 @@ const createProduct = () => {
     const value = e.currentTarget.value;
     const files = e.currentTarget.files;
 
-    // IL PROBLEMA è che stai impostando n file non una sola immagine quindi non riesci a salvare tutto
-    //Per img la salverà ma non per gli altri dati -> possibile soluzione, specificarlo dentro img
-
-    //OPPURE metti la lettura dell'evento direttamente sul'inpt e non su handleUpload (coem avevi fatto su github)
-
-    //if (value && value[0].size < 1000000000000)
-
-    if (value) {
+    if (name !== "img") {
       setInputs((values) => ({ ...values, [name]: value }));
-    } else if (files) {
+    } else if (name === "img") {
       setInputs((values) => ({ ...values, [name]: files[0] }));
-      console.log(files[0]);
       // setImgLoad(files[0]);
     } else {
       alert("File troppo grande!");
@@ -55,14 +58,16 @@ const createProduct = () => {
   // INPUT FORM string (da unire poi con image)
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log(inputs);
   };
 
-  const handleClickUpload = () => {
+  const handleClickUpload = async (e: any) => {
+    const tempValues = { ...inputs };
+
+    const productDocument = delete tempValues.img;
+
     if (inputs.img) {
-      const name = inputs.img.name;
-      console.log(inputs.img);
-      console.log(inputs);
+      const name = inputs.title;
+
       const storageRef = ref(storage, `images/products/${name}`);
       const uploadTask = uploadBytesResumable(storageRef, inputs.img);
 
@@ -75,10 +80,8 @@ const createProduct = () => {
           setProgressUpload(progress); //mostrare caricamento
           switch (snapshot.state) {
             case "paused":
-              console.log("Upload is paused");
               break;
             case "running":
-              console.log("Upload is running");
               break;
           }
         },
@@ -89,12 +92,25 @@ const createProduct = () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             //upload url
             setDownloadURL(url);
+            //TODO -> AGGIUNGERE id + producer
+            //add ALL data to database
+            addDoc(produtsCollection, {
+              Abbinamenti: inputs.Abbinamenti,
+              Description: inputs.Description,
+              Ingredient: inputs.Ingredient,
+              disponibile: inputs.disponibile,
+              // id: inputs.id,
+              // producer: inputs.producer,
+              title: inputs.title,
+              img: url,
+            });
           });
         }
       );
     } else {
       console.log("errore caricament");
     }
+    //salvare dati setDoc con id specifico
   };
 
   //remove image file
@@ -178,7 +194,6 @@ const createProduct = () => {
             <input
               type="file"
               name="img"
-              value={inputs.img || ""}
               // onChange={(e) => {
               //   handleUpload(e.target.files);
               // }}
