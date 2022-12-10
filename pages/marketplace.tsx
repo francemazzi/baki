@@ -6,7 +6,7 @@ function marketplace() {
   return (
     <div>
       <div>
-        <ProductList scrollMode="flex-wrap" />
+        <ProductList scrollMode="flex-wrap" justify="justify-center" />
         {/*  */}
         {/* test scheda prodotto*/}
         {/* <TestCard /> */}

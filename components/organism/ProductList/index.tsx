@@ -4,11 +4,12 @@ import { PRODOTTI } from "../../../common/costants";
 
 type TProductList = {
   scrollMode?: string;
+  justify?: string;
 };
 
-const ProductList: React.FC<TProductList> = ({ scrollMode }) => {
+const ProductList: React.FC<TProductList> = ({ scrollMode, justify }) => {
   return (
-    <div className={`flex flex-row items-center justify-center ${scrollMode}`}>
+    <div className={`flex flex-row items-center ${justify} ${scrollMode}`}>
       {PRODOTTI.map((i, id) => {
         return (
           <div key={id}>

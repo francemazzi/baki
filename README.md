@@ -10,16 +10,21 @@ npm run dev
 yarn dev
 ```
 
-## TO DO LIST
+## Work in progress! 👷🏻‍♂️
 
-- Pagina prodotto e pre-ordinazione
-- Pagina categorie
-- carello
+I decided to make public the work I am conducting in my spare time. I am creating a free platform for food producers (bakeries, bakeries, restaurants) to manage preorders so as to avoid queues and finished products.
+
+## TO DO LIST 📝
+
+- Product and pre-order page
+- Categories page
+- cart
 - checkout
-- caricamento prodotto
-- gestionale caricamento prodotto
-  - Visione pre-ordini
-  - Aggiunta modifica prodotti
+- product loading
+- product loading management
+  - View pre-orders
+  - Adding product modification
+- Implement a token for those who do not want to pay by card and do not have cash at the time of purchase (like satispay but in EURS or other stablecoin)
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
