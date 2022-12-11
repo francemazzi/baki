@@ -1,6 +1,6 @@
 import React from "react";
-import TestCard from "../components/molecols/TestCard";
-import ProductList from "../components/organism/ProductList";
+import TestCard from "../../components/molecols/TestCard";
+import ProductList from "../../components/organism/ProductList";
 
 function marketplace() {
   return (

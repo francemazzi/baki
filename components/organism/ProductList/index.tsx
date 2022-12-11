@@ -1,10 +1,12 @@
 import React from "react";
 import ProductCard from "../ProductCard";
 import { PRODOTTI } from "../../../common/costants";
+import Link from "next/link";
 
 type TProductList = {
   scrollMode?: string;
   justify?: string;
+  productId?: string;
 };
 
 const ProductList: React.FC<TProductList> = ({ scrollMode, justify }) => {
@@ -14,6 +16,7 @@ const ProductList: React.FC<TProductList> = ({ scrollMode, justify }) => {
         return (
           <div key={id}>
             <ProductCard
+              linkPage={`/marketplace/${i.titolo}`}
               foto={i.foto}
               titolo={i.titolo}
               produttore={i.produttore}

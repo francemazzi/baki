@@ -8,3 +8,13 @@ export interface NewProductType {
   title?: string;
   img?: File;
 }
+
+export type cardType = {
+  foto: string;
+  titolo: string;
+  produttore: string;
+  categoria: string;
+  prezzo: string;
+  portate: string;
+  linkPage: string;
+};

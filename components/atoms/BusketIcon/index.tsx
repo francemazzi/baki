@@ -4,7 +4,7 @@ const BusketIcon = () => {
   return (
     <div>
       <div>
-        <button className="bg-[#FFF] shadow-md h-[40px] w-[40px] rounded-full">
+        <button className="bg-[#FFF] shadow-md h-[40px] w-[40px] rounded-full pointer-events-none">
           🧺
         </button>
       </div>
