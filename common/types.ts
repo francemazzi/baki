@@ -18,3 +18,18 @@ export type cardType = {
   portate: string;
   linkPage: string;
 };
+
+export type productPageType = {
+  foto: string;
+  titolo: string;
+  produttore: string;
+  categoria: string;
+  prezzo: string;
+  portate: string;
+};
+
+export type buttonType = {
+  text: string;
+  textColor: string;
+  color: string;
+};
