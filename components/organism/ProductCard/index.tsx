@@ -3,6 +3,10 @@ import Image from "next/image";
 import BusketIcon from "../../atoms/BusketIcon";
 import Link from "next/link";
 import { cardType } from "../../../common/types";
+//Redux
+import { useSelector, useDispatch } from "react-redux";
+import { decrement, increment } from "../../../rtk/slices/counterSlice";
+import { RootState } from "../../../rtk/store";
 
 const ProductCard: React.FC<cardType> = ({
   foto,
@@ -13,6 +17,9 @@ const ProductCard: React.FC<cardType> = ({
   portate,
   linkPage,
 }) => {
+  //TODO -> FIX the value must increment only on selected product
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
   return (
     <div className="flex flex-col items-center h-[20rem] w-[10rem] shadow-md rounded-md m-[5px] relative">
       {/* foto prodotto + add cart */}
@@ -32,7 +39,9 @@ const ProductCard: React.FC<cardType> = ({
           <div className="text-[#FFF] text-[15px] shadow-md font-bold">
             {portate} prozion{+portate > 1 ? "i" : "e"}
           </div>
-          <BusketIcon />
+          <div>
+            <BusketIcon onClick={() => dispatch(increment())} />
+          </div>
         </div>
       </div>
       {/* dettagli produttore */}

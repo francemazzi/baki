@@ -11,6 +11,11 @@ import { UserContext } from "../lib/context";
 import { useContext } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import firebase from "firebase/app";
+//wallet connection
+import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
+import { Button } from "antd";
+
+type Props = {};
 
 export default function Enter() {
   //UserContext
@@ -34,7 +39,7 @@ export default function Enter() {
 }
 
 // Sign in with Google button
-function SignInButton() {
+function SignInButton({}: Props) {
   function signInWithGoogle() {
     signInWithPopup(auth, provider)
       .then(async (result) => {
@@ -61,10 +66,15 @@ function SignInButton() {
       });
   }
 
+  //wallett connection
+  const connectWithMetmask = useMetamask();
+  const disconnect = useDisconnect();
+  const address = useAddress();
+
   return (
     <div className="flex flex-col ">
       <div className="text-[22px] mt-[20px] text-center ">
-        Accedi ora con il tuo profilo google:
+        Accedi ora come preferisci
       </div>
       <button
         className=" p-[20px] m-[20px] lg:m-[10rem] md:m-[15px] sm:m-[5px] shadow-md rounded-[12px] hover:p-[15px] origin-top"
@@ -72,6 +82,21 @@ function SignInButton() {
       >
         Sign in with Google
       </button>
+      {address ? (
+        <button
+          onClick={disconnect}
+          className="connenctWalletBtn p-[20px] m-[20px] lg:m-[10rem] md:m-[15px] sm:m-[5px] shadow-md rounded-[12px] hover:p-[15px] origin-top"
+        >
+          👋🏻 {address?.slice(0, 5) + "..." + address?.slice(-4)}
+        </button>
+      ) : (
+        <button
+          onClick={connectWithMetmask}
+          className="connenctWalletBtn p-[20px] m-[20px] lg:m-[10rem] md:m-[15px] sm:m-[5px] shadow-md rounded-[12px] hover:p-[15px] origin-top"
+        >
+          Connettiti con Metamask
+        </button>
+      )}
     </div>
   );
 }

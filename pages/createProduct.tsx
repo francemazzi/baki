@@ -28,6 +28,7 @@ import { app } from "../lib/firebase";
       Logica:
       - Assegnare a prodotto caricato: producer, id, img
       - Inserire metatada per collegare image a produttore e prodotto
+      - implementare form -> https://react-hook-form.com/get-started#Quickstart 
        
 */
 }

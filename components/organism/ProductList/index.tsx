@@ -14,7 +14,7 @@ const ProductList: React.FC<TProductList> = ({ scrollMode, justify }) => {
     <div className={`flex flex-row items-center ${justify} ${scrollMode}`}>
       {PRODOTTI.map((i, id) => {
         return (
-          <div key={id}>
+          <div key={id} id={id.toString()}>
             <ProductCard
               linkPage={`/marketplace/${i.titolo}`}
               foto={i.foto}

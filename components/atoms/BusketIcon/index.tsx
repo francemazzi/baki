@@ -1,10 +1,17 @@
 import React from "react";
 
-const BusketIcon = () => {
+type buttonAddType = {
+  onClick?: () => void;
+};
+
+const BusketIcon: React.FC<buttonAddType> = ({ onClick }) => {
   return (
     <div>
       <div>
-        <button className="bg-[#FFF] shadow-md h-[40px] w-[40px] rounded-full">
+        <button
+          className="bg-[#FFF] shadow-md h-[40px] w-[40px] rounded-full"
+          onClick={onClick}
+        >
           🧺
         </button>
       </div>

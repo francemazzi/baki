@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { PRODOTTI } from "../../common/costants";
 import { productPageType } from "../../common/types";
 import ProductList from "../../components/organism/ProductList";
 import Button from "../../components/atoms/Button";
+//get data
+import { collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { db, produtsCollection } from "../../lib/controller";
+
+// Dynamic Routes
+
+// export async function getServerSideProps() {
+//   const res = await fetch(PRODOTTI);
+//   const data = await res.json();
+
+//   return {
+//     props: {
+//       products: data,
+//     },
+//   };
+// }
 
 const ProductPage: React.FC<productPageType> = (
   {
@@ -16,6 +32,26 @@ const ProductPage: React.FC<productPageType> = (
     // portate,
   }
 ) => {
+  //get data from firebase
+  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      const productsRef = doc(db, "products");
+      const productList = await getDoc(productsRef);
+      if (productList.exists()) {
+        console.log("Document data:", productList.data());
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }
+    // fetchData();
+  });
+
+  // console.log(productList);
+
   const router = useRouter();
   //const productIde =  router.query.productId
   // TODO -> router dinamico pagina + aggiungere in cima i vari pulsanti per tornare indietro
@@ -49,6 +85,7 @@ const ProductPage: React.FC<productPageType> = (
             text="Aggiungi al carrello"
             color="#ff7f66"
             textColor="#FFF"
+            colorHover="#ff8066af"
           />
 
           {/* Descrizione */}
