@@ -14,7 +14,7 @@ yarn dev
 
 I decided to make public the work I am conducting in my free time. I am creating a free platform for food producers (bakeries, bakeries, restaurants) to manage preorders to avoid food waste anticipating demand and finished products.
 
-Costumers will able to buy products with a discount that depends on the day between order and withdraw.
+Costumers will able to buy products with a discount price that depends on the day between order and withdraw.
 
 
 ## TO DO LIST 📝
