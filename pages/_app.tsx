@@ -18,16 +18,15 @@ export default function App({ Component, pageProps }: AppProps) {
       <UserContext.Provider
         value={{ user: "", userName: "a", producer: false }}
       >
-        {/*eth provider network */}
-        <ThirdwebProvider desiredChainId={network}>
-          <Provider store={store}>
-            <Navbar />
-            <CategoryBar />
+        <Provider store={store}>
+          <Navbar />
+          <CategoryBar />
+          <ThirdwebProvider desiredChainId={network}>
             <Component {...pageProps} />
-            <Footer />
-            <Toaster />
-          </Provider>
-        </ThirdwebProvider>
+          </ThirdwebProvider>
+          <Footer />
+          <Toaster />
+        </Provider>
       </UserContext.Provider>
     </div>
   );

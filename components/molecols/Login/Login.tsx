@@ -5,6 +5,7 @@ import Admin from "../../../pages/[admin]/Admin";
 //ricereare pagina username che ho eliminato-> serve a settare username
 //wallet connection
 import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
+import { PROFILE_PHOTO } from "../../../common/costants";
 
 type userType = {
   user: string;
@@ -24,8 +25,6 @@ const Login: React.FC = () => {
   const username = false;
 
   //wallett connection
-  const connectWithMetmask = useMetamask();
-  const disconnect = useDisconnect();
   const address = useAddress();
 
   return (
@@ -44,7 +43,7 @@ const Login: React.FC = () => {
                   Carica prodotto
                 </button>
               </Link>
-              <Link href={`/${Username}`}>
+              <Link href={`/`}>
                 <div className="relative aspect-1 h-[20px] w-full cursor-pointer rounded-[10px] bg-slate-100 md:h-[543px] xl:h-[590px]">
                   <Image
                     className=" ml-[10px] mr-[10px]"
@@ -66,7 +65,7 @@ const Login: React.FC = () => {
                 </Link>
               </div>
               <div>
-                <Link href={`/${Username}`}>
+                <Link href={`/`}>
                   <div>Profilo</div>
                   {/* prossima feature inserire immagine profilo */}
                   {/* <div className="relative h-[5px] cursor-pointer rounded-[10px] bg-slate-100 md:h-[10px] xl:h-[10px]">

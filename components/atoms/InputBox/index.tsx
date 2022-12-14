@@ -7,7 +7,7 @@ const InputBox: React.FC<inputType> = ({ placeHolderText }) => {
   return (
     <div className="flex flex-col w-full text-center justify-center px-[10px]">
       <input
-        placeHolder={placeHolderText}
+        placeholder={placeHolderText}
         type="text"
         name="subscribe-Newsletter"
         width="w-full"
