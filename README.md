@@ -12,7 +12,7 @@ yarn dev
 
 ## Work in progress! 👷🏻‍♂️
 
-I decided to make public the work I am conducting in my spare time. I am creating a free platform for food producers (bakeries, bakeries, restaurants) to manage preorders so as to avoid queues and finished products.
+I decided to make public the work I am conducting in my free time. I am creating a free platform for food producers (bakeries, bakeries, restaurants) to manage preorders to avoid food waste anticipating demand and finished products.
 
 ## TO DO LIST 📝
 
