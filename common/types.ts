@@ -18,6 +18,15 @@ export type cardType = {
   portate: string;
   linkPage: string;
 };
+export type cardTypeNFT = {
+  foto?: any;
+  titolo?: any;
+  produttore?: string;
+  categoria?: string;
+  prezzo?: string;
+  portate?: string;
+  linkPage?: string;
+};
 
 export type productPageType = {
   foto: string;

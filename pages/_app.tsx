@@ -9,7 +9,11 @@ import Footer from "../components/organism/Footer";
 import { store } from "../rtk/store";
 import { Provider } from "react-redux";
 //eth network
-import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
+import {
+  ThirdwebProvider,
+  useContract,
+  useActiveListings,
+} from "@thirdweb-dev/react";
 import network from "../utils/network";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -19,13 +23,15 @@ export default function App({ Component, pageProps }: AppProps) {
         value={{ user: "", userName: "a", producer: false }}
       >
         <Provider store={store}>
-          <Navbar />
-          <CategoryBar />
           <ThirdwebProvider desiredChainId={network}>
+            <Navbar />
+            <CategoryBar />
+
             <Component {...pageProps} />
+
+            <Footer />
+            <Toaster />
           </ThirdwebProvider>
-          <Footer />
-          <Toaster />
         </Provider>
       </UserContext.Provider>
     </div>

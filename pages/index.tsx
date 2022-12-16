@@ -5,8 +5,27 @@ import Navbar from "../components/molecols/Navbar/Navbar";
 import Loader from "../components/atoms/loader/Loader";
 import CategoryBar from "../components/organism/CategoryBar";
 import ProductList from "../components/organism/ProductList";
+import Reasearch from "../components/atoms/Reasearch";
+//eth network
+import {
+  ChainId,
+  ThirdwebProvider,
+  useContract,
+  useActiveListings,
+} from "@thirdweb-dev/react";
+import ProductListNFT from "../components/organism/ProductListNFT";
 
-export default function Home() {
+const Home = () => {
+  const { contract } = useContract(
+    process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT,
+    "marketplace"
+  );
+
+  const { data: listings, isLoading: loadingListing } =
+    useActiveListings(contract);
+
+  console.log(listings);
+
   return (
     <div className="m-[10px]">
       <div className="flex flex-col justify-center items-center p-[20px] h-[20rem] rounded-lg shadow-xl relative">
@@ -29,7 +48,21 @@ export default function Home() {
           <ProductList scrollMode="overflow-x-scroll" />
         </div>
       </div>
+      <div className="my-[15px]">
+        <h2 className="text-[19px] font-semibold ">
+          Ricerca Il tuo prodotto preferito
+        </h2>
+        <Reasearch />
+      </div>
+      <div className="my-[15px]">
+        <h2 className="text-[19px] font-semibold animate-pulse text-red-600">
+          Pre-ordina, risparmia e guadagna!
+        </h2>
+        <ProductListNFT />
+      </div>
       {/* <Loader show={true} /> */}
     </div>
   );
-}
+};
+
+export default Home;

@@ -25,6 +25,8 @@ const Footer = () => {
             </div>
           );
         })}
+        <p className="text-[14px]  cursor-pointer">Aiuto 💬</p>
+        <p className="text-[14px] cursor-pointer">Condizioni di utilizzo 📝</p>
         <div>
           <Login />
         </div>

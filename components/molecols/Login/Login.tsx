@@ -132,14 +132,13 @@ const Login: React.FC = () => {
           )}
         </div>
       )}
-      {!username ||
-        (!address && (
-          <div>
-            <Link href={"/enter"}>
-              <button className=" ml-[10px] mr-[10px]">Accedi</button>
-            </Link>
-          </div>
-        ))}
+      {(!username || !address) && (
+        <div>
+          <Link href={"/enter"}>
+            <button className=" ml-[10px] mr-[10px]">Accedi</button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

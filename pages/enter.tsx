@@ -23,7 +23,7 @@ export default function Enter() {
   const address = useAddress();
 
   return (
-    <div className="enter">
+    <div>
       <main>{user || address ? <SignOutButton /> : <SignInButton />}</main>
     </div>
   );
@@ -62,7 +62,7 @@ function SignInButton({}: Props) {
   }
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col items-center">
       <div className="text-[22px] mt-[20px] text-center ">
         Accedi ora come preferisci
       </div>
