@@ -33,8 +33,8 @@ const ProductCardNFT: React.FC<cardTypeNFT> = ({
         <Link href={linkPage ? linkPage : "/"}>
           <MediaRenderer src={foto} className="rounded-t-md absolute top-0 " />
         </Link>
-        <div className="flex flex-row items-center justify-around pb-[5px] relative">
-          <div className=" text-[16px] text-black p-[10px] font-bold">
+        <div className="flex flex-row items-center justify-around relative">
+          <div className=" text-[16px] text-black font-bold">
             <div className="flex flex-row items-center">
               {portate ? (
                 +portate > 1 ? (
@@ -59,7 +59,7 @@ const ProductCardNFT: React.FC<cardTypeNFT> = ({
       {/* dettagli produttore */}
       <Link href={linkPage ? linkPage : "/"}>
         <div className="mt-[15px] pl-[5px] ">
-          <div className=" pb-[5px] font-semibold sm:text-[15px] lg:text-[18px] pr-[5px]">
+          <div className=" pb-[5px] font-semibold text-[14px] lg:text-[18px] pr-[5px]">
             {titolo}
           </div>
           <div className="pt-[2.5px] pb-[2.5px] sm:text-[12px] lg:text-[18px] italic">
@@ -69,7 +69,7 @@ const ProductCardNFT: React.FC<cardTypeNFT> = ({
           <div className="flex flex-row items-center py-[5px] ">
             <div className="mr-[1px]">{prezzo} € </div>
             <div>
-              per {portate} prozion{portate ? (+portate > 1 ? "i" : "e") : "i"}
+              per {portate} prozion{portate ? (+portate > 1 ? "i" : "e") : "e"}
             </div>
           </div>
         </div>

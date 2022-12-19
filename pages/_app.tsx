@@ -26,9 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <ThirdwebProvider desiredChainId={network}>
             <Navbar />
             <CategoryBar />
-
             <Component {...pageProps} />
-
             <Footer />
             <Toaster />
           </ThirdwebProvider>
