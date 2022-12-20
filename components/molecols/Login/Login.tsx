@@ -1,7 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import Admin from "../../../pages/[admin]/Admin";
-// import Username from "../../../pages/[setUsername]/SetUsername";
 //ricereare pagina username che ho eliminato-> serve a settare username
 //wallet connection
 import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
@@ -107,7 +105,7 @@ const Login: React.FC = () => {
           ) : (
             <div className="flex lg:flex-row sm:flex-col">
               <div>
-                <Link href={`/${Admin}`}>
+                <Link href={`/`}>
                   <button className=" ml-[10px] mr-[10px]">
                     I tuoi pre-ordini
                   </button>

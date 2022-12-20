@@ -2,3 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .formField {
+    @apply px-5 h-10 pr-16 my-[5px] shadow-lg w-full mx-[10px] border-gray-300 bg-white text-sm outline-none;
+  }
+}

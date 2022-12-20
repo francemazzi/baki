@@ -16,7 +16,6 @@ I decided to make public the work I am conducting in my free time. I am creating
 
 Costumers will able to buy products with a discount price that depends on the day between order and withdraw.
 
-
 ## TO DO LIST 📝
 
 - Product and pre-order page
@@ -28,6 +27,10 @@ Costumers will able to buy products with a discount price that depends on the da
   - View pre-orders
   - Adding product modification
 - Implement a token for those who do not want to pay by card and do not have cash at the time of purchase (like satispay but in EURS or other stablecoin)
+
+## Test network
+
+I use Goerli test network! So make attention you set all the things correctly
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
