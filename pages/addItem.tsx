@@ -4,7 +4,6 @@ import Image from "next/image";
 //web3
 import { useContract, useAddress } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
-import { Description } from "@ethersproject/properties";
 
 const AddItem = () => {
   const [preview, setPreview] = useState<string>();
@@ -38,20 +37,18 @@ const AddItem = () => {
     const target = e.target as typeof e.target & {
       name: { value: string };
       Description: { value: string };
+      Ingredient: { value: string };
+      Abbinamenti: { value: string };
     };
-    //TODO -> inserire questi sopra
-    // Ingredient: { value: string };
-    // Abbinamenti: { value: string };
 
-    //metadata
+    //metadata from form to contract
     const metadata = {
       name: target.name.value,
-      Description: target.Description.value,
+      description: target.Description.value,
       image: image,
+      ingredient: target.Ingredient.value,
+      abbinamenti: target.Abbinamenti.value,
     };
-    //TODO -> inserire questi sopra
-    // Ingredient: target.Ingredient.value,
-    // Abbinamenti: target.Abbinamenti.value,
 
     //assicurarsi di non perdere errori
     try {
@@ -107,7 +104,7 @@ const AddItem = () => {
               id="Description"
             />
 
-            {/* <label>Ingredient del prodotto</label>
+            <label>Ingredient del prodotto</label>
             <input
               className="formField"
               type="text"
@@ -120,7 +117,7 @@ const AddItem = () => {
               type="text"
               placeholder="Inserisci qui gli Abbinamneti..."
               id="Abbinamenti"
-            /> */}
+            />
 
             <label>Immagine del prodotto</label>
             <input
