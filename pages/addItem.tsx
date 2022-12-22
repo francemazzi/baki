@@ -60,7 +60,7 @@ const AddItem = () => {
       console.log(receipt, tokenId, nft);
 
       // ritornare a pagine che si preferisce
-      router.push("/");
+      router.push("/create");
     } catch (error) {
       console.log(error);
     }

@@ -150,7 +150,7 @@ const Create = () => {
                 onClick={() => setSelectNFT(nft)}
               >
                 <MediaRenderer
-                  className="h-20 w-full"
+                  className="h-15 w-full rounded-md"
                   src={nft.metadata.image}
                 />
                 <h3 className="text-[18px] font-semibold">

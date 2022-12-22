@@ -26,6 +26,7 @@ export type cardTypeNFT = {
   prezzo?: string;
   portate?: string;
   linkPage?: string;
+  listing?: string;
 };
 
 export type productPageType = {
