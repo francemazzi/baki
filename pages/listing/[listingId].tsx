@@ -3,10 +3,19 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { PRODOTTI } from "../../common/costants";
 import Button from "../../components/atoms/Button";
-import { MediaRenderer, useContract, useListing } from "@thirdweb-dev/react";
+import {
+  MediaRenderer,
+  useContract,
+  useListing,
+  useNetwork,
+  useNetworkMismatch,
+  useBuyNow,
+} from "@thirdweb-dev/react";
 import { Divider } from "rc-menu";
 import Loader from "../../components/atoms/loader/Loader";
 import { ListingType } from "@thirdweb-dev/sdk";
+import Countdown from "react-countdown";
+import network from "../../utils/network";
 
 type minimumNextBidType = {
   displayValue: string;
@@ -19,8 +28,13 @@ const ListingPage = () => {
   //cambio USDC in EUR
   const cambioEUR = 0.94;
 
+  //Controllo rete webthird
+  const [, switchNetwork] = useNetwork();
+  const networkMismatch = useNetworkMismatch();
+
   //minimo prezzo asta
   const [minimumNextBid, setMinimumNextBid] = useState<minimumNextBidType>();
+  const [bidAmount, setBidAmount] = useState("");
 
   //distrutturo listing id
   const { listingId } = router.query as { listingId: string };
@@ -33,7 +47,9 @@ const ListingPage = () => {
 
   const { data: listing, isLoading, error } = useListing(contract, listingId);
 
-  console.log(listingId, listing, contract);
+  //Acquisto thirdweb
+  const { mutate: buyNow } = useBuyNow(contract);
+
   //controllo variazioni componente e prezzo
   useEffect(() => {
     if (!listingId || !listing || !contract) return;
@@ -42,8 +58,6 @@ const ListingPage = () => {
       fetchMinNextBid();
     }
   }, [listingId, listing, contract]);
-
-  console.log(minimumNextBid);
 
   const fetchMinNextBid = async () => {
     if (!listingId || !contract) return;
@@ -64,12 +78,63 @@ const ListingPage = () => {
       return "inserisci qui...";
     }
     if (listing.type === ListingType.Auction) {
-      return "inserisci la puntata...";
+      //se c'è una base di asta inserisci di più
+      return Number(minimumNextBid?.displayValue) === 0
+        ? "inserisci la puntata..."
+        : `${minimumNextBid?.displayValue} ${minimumNextBid?.symbol} o più`;
     }
   };
 
-  //checko se non c'è nella lista il prodotto
+  //funzione offerta
+  const createOffer = async () => {
+    try {
+      //check network
+      if (networkMismatch) {
+        switchNetwork && switchNetwork(network);
+        return;
+      }
+      //direct listing
+      if (listing?.type === ListingType.Direct) {
+      }
+      //auction listing
+      if (listing?.type === ListingType.Auction) {
+      }
+    } catch (erro) {
+      console.log(error);
+    }
+  };
 
+  //funzione acquisto nft
+  const buyNft = async () => {
+    if (networkMismatch) {
+      switchNetwork && switchNetwork(network);
+      return;
+    }
+
+    //se non c'è listing
+    if (!listingId || !listing || !contract) return;
+
+    //TODO --> se quantità maggiore di uno buyAmount deve essere connesso a quantità
+    //acquisto
+    await buyNow(
+      {
+        id: listingId,
+        buyAmount: 1,
+        type: listing?.type,
+      },
+      {
+        onSuccess(data, variables, context) {
+          console.log("successo!", data);
+          router.replace("/");
+        },
+        onError(data, variables, context) {
+          console.log("Errore", data, variables, context);
+        },
+      }
+    );
+  };
+
+  //checko se non c'è nella lista il prodotto
   if (isLoading) {
     return (
       <div>
@@ -133,8 +198,9 @@ const ListingPage = () => {
         <Button
           text="Aquista ora"
           color="red"
-          textColor="white"
+          textColor="black"
           colorHover="#ff8066af"
+          onClick={buyNft}
         />
 
         {/* Asta */}
@@ -148,12 +214,14 @@ const ListingPage = () => {
           </label>
           <input
             className="formField rounded-md"
+            onChange={(e) => setBidAmount(e.target.value)}
             type="text"
             placeholder={formatPlaceholder()}
             name="price"
           />
 
           <button
+            onClick={createOffer}
             type="submit"
             className="w-full p-[10px] text-center text-[black] shadow-lg rounded-md my-[10px] hover:p-[12px] bg-slate-100 hover:bg-slate-300 hover:shadow-xl"
           >
@@ -166,9 +234,13 @@ const ListingPage = () => {
         {listing.type === ListingType.Auction && (
           <>
             <p>Minimo dell&apos;asta</p>
-            <p>...</p>
+            <p>
+              {minimumNextBid?.displayValue} {minimumNextBid?.symbol}
+            </p>
             <p>Tempo che resta al termine: </p>
-            <p>...</p>
+            <Countdown
+              date={Number(listing.endTimeInEpochSeconds.toString()) * 1000}
+            />
           </>
         )}
 

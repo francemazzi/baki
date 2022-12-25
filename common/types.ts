@@ -43,4 +43,5 @@ export type buttonType = {
   textColor: string;
   color: string;
   colorHover: string;
+  onClick?: () => void;
 };
