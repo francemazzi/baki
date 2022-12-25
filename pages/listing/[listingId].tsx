@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PRODOTTI } from "../../common/costants";
 import Button from "../../components/atoms/Button";
 import { MediaRenderer, useContract, useListing } from "@thirdweb-dev/react";
@@ -8,15 +8,21 @@ import { Divider } from "rc-menu";
 import Loader from "../../components/atoms/loader/Loader";
 import { ListingType } from "@thirdweb-dev/sdk";
 
-type Props = {};
+type minimumNextBidType = {
+  displayValue: string;
+  symbol: string;
+};
 
-const ListingPage = ({}: Props) => {
+const ListingPage = () => {
+  //router
+  const router = useRouter();
   //cambio USDC in EUR
   const cambioEUR = 0.94;
 
-  //router
-  const router = useRouter();
-  //distrutturo listingi id
+  //minimo prezzo asta
+  const [minimumNextBid, setMinimumNextBid] = useState<minimumNextBidType>();
+
+  //distrutturo listing id
   const { listingId } = router.query as { listingId: string };
 
   //connessione contratto marketplace
@@ -26,6 +32,41 @@ const ListingPage = ({}: Props) => {
   );
 
   const { data: listing, isLoading, error } = useListing(contract, listingId);
+
+  console.log(listingId, listing, contract);
+  //controllo variazioni componente e prezzo
+  useEffect(() => {
+    if (!listingId || !listing || !contract) return;
+    if (listing.type === ListingType.Auction) {
+      //settare con nuovi dati scaricati da blockchain
+      fetchMinNextBid();
+    }
+  }, [listingId, listing, contract]);
+
+  console.log(minimumNextBid);
+
+  const fetchMinNextBid = async () => {
+    if (!listingId || !contract) return;
+    const { displayValue, symbol } = await contract.auction.getMinimumNextBid(
+      listingId
+    );
+
+    setMinimumNextBid({
+      displayValue: displayValue,
+      symbol: symbol,
+    });
+  };
+
+  //formattazione placeholder asta nft
+  const formatPlaceholder = () => {
+    if (!listing) return;
+    if (listing.type === ListingType.Direct) {
+      return "inserisci qui...";
+    }
+    if (listing.type === ListingType.Auction) {
+      return "inserisci la puntata...";
+    }
+  };
 
   //checko se non c'è nella lista il prodotto
 
@@ -40,17 +81,6 @@ const ListingPage = ({}: Props) => {
   if (!listing) {
     return <div>Articolo non trovato</div>;
   }
-
-  //formattazione placeholder asta nft
-  const formatPlaceholder = () => {
-    if (!listing) return;
-    if (listing.type === ListingType.Direct) {
-      return "inserisci qui...";
-    }
-    if (listing.type === ListingType.Auction) {
-      return "inserisci la puntata...";
-    }
-  };
 
   return (
     <div className="flex flex-col lg:flex-row  mac-w-6xl mx-auto p-2">
@@ -122,13 +152,25 @@ const ListingPage = ({}: Props) => {
             placeholder={formatPlaceholder()}
             name="price"
           />
+
+          <button
+            type="submit"
+            className="w-full p-[10px] text-center text-[black] shadow-lg rounded-md my-[10px] hover:p-[12px] bg-slate-100 hover:bg-slate-300 hover:shadow-xl"
+          >
+            {listing.type === ListingType.Direct ? "Offerta" : "Punta"}
+          </button>
         </div>
-        <button
-          type="submit"
-          className="p-[10px] text-center text-[black] shadow-lg rounded-md my-[10px] hover:p-[12px] bg-slate-100 hover:bg-slate-300 hover:shadow-xl"
-        >
-          {listing.type === ListingType.Direct ? "Offerta" : "Punta"}
-        </button>
+
+        {/* Offerte passate */}
+
+        {listing.type === ListingType.Auction && (
+          <>
+            <p>Minimo dell&apos;asta</p>
+            <p>...</p>
+            <p>Tempo che resta al termine: </p>
+            <p>...</p>
+          </>
+        )}
 
         {/* Descrizione */}
         <div className="my-[15px] p-[10px]">
