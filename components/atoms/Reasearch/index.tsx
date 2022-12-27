@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const Reasearch = () => {
   //poi si può espoertare su altro foglio di lavoro (se servisse ma con redux forse no)
   const [show, setShow] = useState(false);
-  const handleClickOne = (e) => {
+  const handleClickOne = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
       setShow(true);
     } else {
