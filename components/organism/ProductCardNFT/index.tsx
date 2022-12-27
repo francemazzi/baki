@@ -41,7 +41,7 @@ const ProductCardNFT: React.FC<cardTypeNFT> = ({
     useActiveListings(contract);
 
   return (
-    <div className="flex flex-col card overflow-hidden shadow-md rounded-md hover:scale-105 transition-all duration-150 aese-out">
+    <div className="flex flex-col overflow-hidden shadow-md rounded-md hover:scale-105 transition-all duration-150 aese-out">
       {/* foto prodotto  */}
       <div className="flex-1 flex flex-col pb-3 items-center w-full">
         <Link href={linkPage ? linkPage : `/listing/${listing}`}>
@@ -64,7 +64,7 @@ const ProductCardNFT: React.FC<cardTypeNFT> = ({
                   "prozione"
                 )
               ) : (
-                <p className="animate-pulse text-[red]">sold-out</p>
+                <p className="animate-pulse text-[#f29191]">Pezzo unico</p>
               )}
             </div>
           </div>

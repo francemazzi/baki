@@ -9,13 +9,18 @@ import {
   useListing,
   useNetwork,
   useNetworkMismatch,
+  useMakeOffer,
+  useMakeBid,
+  useOffers,
   useBuyNow,
+  useAddress,
 } from "@thirdweb-dev/react";
 import { Divider } from "rc-menu";
 import Loader from "../../components/atoms/loader/Loader";
-import { ListingType } from "@thirdweb-dev/sdk";
+import { ListingType, NATIVE_TOKENS } from "@thirdweb-dev/sdk";
 import Countdown from "react-countdown";
 import network from "../../utils/network";
+import { ethers } from "ethers";
 
 type minimumNextBidType = {
   displayValue: string;
@@ -28,6 +33,8 @@ const ListingPage = () => {
   //cambio USDC in EUR
   const cambioEUR = 0.94;
 
+  //adress utente
+  const address = useAddress();
   //Controllo rete webthird
   const [, switchNetwork] = useNetwork();
   const networkMismatch = useNetworkMismatch();
@@ -49,6 +56,17 @@ const ListingPage = () => {
 
   //Acquisto thirdweb
   const { mutate: buyNow } = useBuyNow(contract);
+  //offerta thirdweb
+  const { mutate: makeOffer } = useMakeOffer(contract);
+  //visualizzazione offerta screen thirdweb
+  const { data: offers } = useOffers(contract, listingId);
+
+  //fare offerta
+  const { mutate: makeBid } = useMakeBid(contract);
+
+  const acceptOffer = async (offer: Record<string, any>) => {
+    //TODO -> ocntinuare funzione e vedere se import è ok (min 1 38)
+  };
 
   //controllo variazioni componente e prezzo
   useEffect(() => {
@@ -95,9 +113,53 @@ const ListingPage = () => {
       }
       //direct listing
       if (listing?.type === ListingType.Direct) {
+        //comparazione valore offerto per vedere se valore uguale a quello di vendita
+        if (
+          listing.buyoutPrice.toString() ===
+          ethers.utils.parseEther(bidAmount).toString()
+        ) {
+          buyNft();
+          return;
+        }
+        //funzione di offerte
+        //TODO --> se quantità maggiore di uno buyAmount deve essere connesso a quantità
+        await makeOffer(
+          {
+            quantity: 1,
+            listingId,
+            pricePerToken: bidAmount,
+          },
+          {
+            onSuccess(data, variables, context) {
+              console.log("successo!", data);
+              router.replace("/");
+              setBidAmount("");
+            },
+            onError(data, variables, context) {
+              console.log("Errore", data, variables, context);
+            },
+          }
+        );
       }
       //auction listing
       if (listing?.type === ListingType.Auction) {
+        console.log("Make bid");
+        await makeBid(
+          {
+            listingId,
+            bid: bidAmount,
+          },
+          {
+            onSuccess(data, variables, context) {
+              console.log("bid successo!", data);
+              router.replace("/");
+              setBidAmount("");
+            },
+            onError(data, variables, context) {
+              console.log("Errore", data, variables, context);
+            },
+          }
+        );
       }
     } catch (erro) {
       console.log(error);
@@ -155,7 +217,7 @@ const ListingPage = () => {
           className="rounded-md object-cover shadow-lg"
         />
       </div>
-      <div className="flex flex-col ">
+      <div className="flex flex-col w-full">
         {/* title */}
         <div className="p-[10px]">
           <h1 className="text-[22px] font-bold">{listing?.asset.name}</h1>
@@ -230,6 +292,46 @@ const ListingPage = () => {
         </div>
 
         {/* Offerte passate */}
+
+        {listing.type === ListingType.Direct && offers && (
+          <div className="grid grid.cols-2 gap-y-2 text-black">
+            {/* offerte totali */}
+            <p className="font-bold">Offerte:</p>
+            <p className="font-bold">{offers.length > 0 ? offers.length : 0}</p>
+            {/* cronologia wallet */}
+            {offers.map((offer) => (
+              <>
+                <p className="flex items-center text-sm italic">
+                  👤{" "}
+                  {offer.offerer.slice(0, 5) + "..." + offer.offerer.slice(-5)}
+                </p>
+                <div>
+                  <p
+                    key={
+                      offer.listingId +
+                      offer.offeror +
+                      offer.totalOfferAmount.toString()
+                    }
+                    className="text-sm italic"
+                  >
+                    {ethers.utils.formatEther(offer.totalOfferAmount)}{" "}
+                    {NATIVE_TOKENS[network].symbol}
+                  </p>
+                  {listing.sellerAddress === address && (
+                    <button
+                      onClick={() => {
+                        acceptOffer(offer);
+                      }}
+                      className="p-2 w-32 bg-[red] rounded-md font-bold cursor-pointer"
+                    >
+                      Accetta offerta
+                    </button>
+                  )}
+                </div>
+              </>
+            ))}
+          </div>
+        )}
 
         {listing.type === ListingType.Auction && (
           <>
