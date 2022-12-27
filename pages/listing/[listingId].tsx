@@ -14,6 +14,7 @@ import {
   useOffers,
   useBuyNow,
   useAddress,
+  useAcceptDirectListingOffer,
 } from "@thirdweb-dev/react";
 import { Divider } from "rc-menu";
 import Loader from "../../components/atoms/loader/Loader";
@@ -63,10 +64,10 @@ const ListingPage = () => {
 
   //fare offerta
   const { mutate: makeBid } = useMakeBid(contract);
+  //
+  const { mutate: acceptOffer } = useAcceptDirectListingOffer(contract);
 
-  const acceptOffer = async (offer: Record<string, any>) => {
-    //TODO -> ocntinuare funzione e vedere se import è ok (min 1 38)
-  };
+  //   const acceptOffer = async (offer: Record<string, any>) => {};
 
   //controllo variazioni componente e prezzo
   useEffect(() => {
@@ -320,7 +321,21 @@ const ListingPage = () => {
                   {listing.sellerAddress === address && (
                     <button
                       onClick={() => {
-                        acceptOffer(offer);
+                        acceptOffer(
+                          {
+                            listingId,
+                            addressOfOfferor: offer.offeror,
+                          },
+                          {
+                            onSuccess(data, variables, context) {
+                              console.log("successo!", data);
+                              router.replace("/");
+                            },
+                            onError(data, variables, context) {
+                              console.log("Errore", data, variables, context);
+                            },
+                          }
+                        );
                       }}
                       className="p-2 w-32 bg-[red] rounded-md font-bold cursor-pointer"
                     >
